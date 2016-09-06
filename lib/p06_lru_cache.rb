@@ -39,4 +39,18 @@ class LRUCache
   def eject!
     @store.eject_some_links
   end
+
+  def recursive_search(query)
+    return false if query.nil? || query.length == 0
+    url = "https://www.google.com/search?query=#{query}"
+    http_response = Net::HTTP.get(URI(url))
+    html_obj = Nokogiri::HTML(http_response)
+    # Depends on what kind of search result you want to feed back
+    # into the loop
+    text_nodes = html_obj.css('span.st')
+    text_nodes.each do |text_node|
+      puts text_node.text
+      # recursive_search(link.values.last)
+    end
+  end
 end
