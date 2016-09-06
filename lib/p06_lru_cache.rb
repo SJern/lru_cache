@@ -17,9 +17,7 @@ class LRUCache
   def get(key)
     #compare max and count
     return @store.get(key) if @store.include?(key)
-    p @store
     @store.insert(key, @prc.call(key))
-
   end
 
   def to_s
@@ -29,13 +27,16 @@ class LRUCache
   private
 
   def calc!(key)
+    # Why is calc empty?! It was never called, blasphemy!
     # suggested helper method; insert an (un-cached) key
   end
 
   def update_link!(link)
     # suggested helper method; move a link to the end of the list
+    @store.append(link)
   end
 
   def eject!
+    @store.eject_some_links
   end
 end
